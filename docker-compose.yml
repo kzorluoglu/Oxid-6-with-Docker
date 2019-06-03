@@ -1,0 +1,23 @@
+version: '3'
+services:
+  php-apache:
+      build:
+        context: ./dockerimages/php-apache
+      ports:
+        - 3333:80
+      volumes:
+        - ./data:/var/www/html
+      links:
+        - mariadb
+  mariadb:
+    image: mariadb:10.1
+    volumes:
+      - mariadb:/var/lib/mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'no'
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'secret'
+      MYSQL_DATABASE: 'oxid6'
+volumes:
+  mariadb:
